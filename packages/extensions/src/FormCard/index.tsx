@@ -1,13 +1,12 @@
-
 import { IExtensionConfig } from '../types'
 
-export const FormCardExtension:IExtensionConfig = {
+export const FormCardExtension: IExtensionConfig = {
   type: 'layout',
   'x-component': 'Card',
   title: '卡片',
-  defaultProps:{
+  defaultProps: {
     showTitleBullet: false,
     showHeadDivider: true,
-    hasBorder: false,
-  },
-} 
+    hasBorder: false
+  }
+}

@@ -1,5 +1,5 @@
 import { IExtensionConfig } from '../types'
-import { buildDataSourceSchema } from '../util' 
+import { buildDataSourceSchema } from '../util'
 
 export const SelectExtension: IExtensionConfig = {
   type: 'string',
@@ -10,20 +10,18 @@ export const SelectExtension: IExtensionConfig = {
     hasClear: true,
     useVirtual: false,
     filterLocal: false,
-    showSearch: true,
+    showSearch: true
   },
   getSchema: () => {
     return {
-      type: "object",
+      type: 'object',
       properties: {
-        "placeholder": {
-          title: "输入提示",
-          type: "string"
+        placeholder: {
+          title: '输入提示',
+          type: 'string'
         },
         dataSource: buildDataSourceSchema()
       }
     }
   }
 }
-
-

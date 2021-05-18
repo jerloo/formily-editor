@@ -5,8 +5,6 @@ export const TimePickerExtension: IExtensionConfig = {
   'x-component': 'TimePicker',
   title: '时间选择',
   defaultProps: {
-    hasClear: true,
+    hasClear: true
   }
 }
-
-

@@ -1,21 +1,21 @@
 {
   "Card": {
-      "title": {
-          "title": "卡片标题"
-      },
-      "subTitle": {
-          "title": "卡片副标题"
-      }
+    "title": {
+      "title": "卡片标题"
+    },
+    "subTitle": {
+      "title": "卡片副标题"
+    }
   },
   "DatePicker": {
-      "placeholder": {},
-      "format": {
-          "title": "格式",
-          "description": "如：YYYY-MM-DD 为 2020-03-27"
-      },
-      "showTime": {
-          "title": "是否使用时间控件"
-      }
+    "placeholder": {},
+    "format": {
+      "title": "格式",
+      "description": "如：YYYY-MM-DD 为 2020-03-27"
+    },
+    "showTime": {
+      "title": "是否使用时间控件"
+    }
   },
   "Form": {
     "size": {
@@ -55,19 +55,12 @@
     "mode": {
       "description": "simple代表选中选项后自动移动，normal代表选中选项后需手动点击移动"
     },
-    "notFoundContent": {
-  
-    },
-    "sortable": {
-  
-    },
-    "showSearch": {
-  
-    }
+    "notFoundContent": {},
+    "sortable": {},
+    "showSearch": {}
   },
   "TimePicker": {
-    "placeholder": {
-    },
+    "placeholder": {},
     "format": {
       "title": "格式",
       "description": "如：HH:mm:ss 代表 xx时xx分xx秒"

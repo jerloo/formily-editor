@@ -30,7 +30,7 @@ export const Demo = () => {
 
   const formRef = React.useRef({}) // fix: schema 不会双向更新,导出json的时候，需要从 form 去获取。
 
-  const renderToolbar = context => {
+  const renderToolbar = (context: any) => {
     const { mode, MODES, setMode, getSchema } = context
     formRef.current = context
     return (
@@ -161,16 +161,22 @@ export const Demo = () => {
         footer={renderExportDialogFooter()}
         onClose={toggleExportDialogVisible}
       >
-       {exportDialogVisible && <MonacoEditor
-          ref={ref}
-          width="500"
-          height="400"
-          language="json"
-          value={JSON.stringify(formRef.current.getSchema(), null, '\t')}
-          options={{
-            readOnly: true
-          }}
-        />} 
+        {exportDialogVisible && (
+          <MonacoEditor
+            ref={ref}
+            width="500"
+            height="400"
+            language="json"
+            value={JSON.stringify(
+              (formRef.current as any).getSchema(),
+              null,
+              '\t'
+            )}
+            options={{
+              readOnly: true
+            }}
+          />
+        )}
       </Dialog>
     </Fragment>
   )
