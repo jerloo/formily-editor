@@ -61,7 +61,7 @@ function getNodeDataAtTreeIndexOrNextIndex({
 export function getDescendantCount({ node, ignoreCollapsed = true }) {
   return (
     getNodeDataAtTreeIndexOrNextIndex({
-      getNodeKey: () => {},
+      getNodeKey: () => { },
       ignoreCollapsed,
       node,
       currentIndex: 0,
@@ -107,12 +107,12 @@ function walkDescendants({
   const selfInfo = isPseudoRoot
     ? null
     : {
-        node,
-        parentNode,
-        path: selfPath,
-        lowerSiblingCounts,
-        treeIndex: currentIndex,
-      };
+      node,
+      parentNode,
+      path: selfPath,
+      lowerSiblingCounts,
+      treeIndex: currentIndex,
+    };
 
   if (!isPseudoRoot) {
     const callbackResult = callback(selfInfo);
@@ -624,13 +624,13 @@ export function addNodeUnderParent({
   if (parentKey === null) {
     return addAsFirstChild
       ? {
-          treeData: [newNode, ...(treeData || [])],
-          treeIndex: 0,
-        }
+        treeData: [newNode, ...(treeData || [])],
+        treeIndex: 0,
+      }
       : {
-          treeData: [...(treeData || []), newNode],
-          treeIndex: (treeData || []).length,
-        };
+        treeData: [...(treeData || []), newNode],
+        treeIndex: (treeData || []).length,
+      };
   }
 
   let insertedTreeIndex = null;
@@ -857,7 +857,7 @@ function addNodeAtDepthAndIndex({
   }
 
   const nextNode = { ...node, children: newChildren };
-  const result  = {
+  const result = {
     node: nextNode,
     nextIndex: childIndex,
   } as any;
@@ -893,7 +893,7 @@ export function insertNode({
   depth: targetDepth,
   minimumTreeIndex,
   newNode,
-  getNodeKey = (params: any) => {},
+  getNodeKey = (params: any) => { },
   ignoreCollapsed = true,
   expandParent = false,
 }) {
@@ -1101,9 +1101,9 @@ export function find({
     const extraInfo = isPseudoRoot
       ? null
       : {
-          path: selfPath,
-          treeIndex: currentIndex,
-        };
+        path: selfPath,
+        treeIndex: currentIndex,
+      };
 
     // Nodes with with children that aren't lazy
     const hasChildren =
@@ -1206,22 +1206,22 @@ export function find({
 }
 
 
-export function search (dataSource, value) {
+export function search(dataSource, value) {
   for (var key in dataSource) {
-      if (dataSource[key].data.key == value) return [dataSource[key].data.key];
-      if (typeof(dataSource[key].children) == "object") {
-          var temp = search(dataSource[key].children, value);
-          if (temp) return dataSource[key].key === '@@root' ? [...temp] : [dataSource[key].data.key, ...temp];
-      }
+    if (dataSource[key].data.key == value) return [dataSource[key].data.key];
+    if (typeof (dataSource[key].children) == "object") {
+      var temp = search(dataSource[key].children, value);
+      if (temp) return dataSource[key].key === '@@root' ? [...temp] : [dataSource[key].data.key, ...temp];
+    }
   }
 }
 
-export function searchIndex (dataSource, value) {
+export function searchIndex(dataSource, value) {
   for (var key in dataSource) {
     if (dataSource[key].data.key == value) {
       return key
     };
-    if (typeof(dataSource[key].children) == "object") {
+    if (typeof (dataSource[key].children) == "object") {
       var idx = searchIndex(dataSource[key].children, value);
       if (idx !== undefined) {
         return idx
@@ -1233,7 +1233,7 @@ export function searchIndex (dataSource, value) {
 /**
  * 在当前父节点children数组中找到key值节点所在的索引
  *  */
-export function getChildIndex (children  = [], key) {
+export function getChildIndex(children = [], key) {
   let idx;
   children.forEach((child, index) => {
     if (child.data.key === key) {
@@ -1243,7 +1243,7 @@ export function getChildIndex (children  = [], key) {
   return idx
 }
 
-export function flattenForest (forest = []) {
+export function flattenForest(forest = []) {
   return forest.reduce((ret, cur) => {
     if (!cur.children || !cur.children.length) {
       return [
@@ -1279,7 +1279,7 @@ export const NODE_TYPE = (type) => {
     layout: 'layout',
     array: 'array'
   }
-  return nodeMap[type] || 'simple' 
+  return nodeMap[type] || 'simple'
 }
 export const pathParser = (path: string[]) => {
   return FormPath.parse(path.join('.'))

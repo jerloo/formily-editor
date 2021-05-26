@@ -3,7 +3,7 @@ import './style.scss'
 import {
   SchemaForm,
   SchemaMarkupField as Field,
-  createAsyncFormActions,
+  createAsyncFormActions
 } from '@formily/next'
 import { lowercase } from '@formily/shared'
 import {
@@ -11,7 +11,7 @@ import {
   Radio,
   NumberPicker,
   ArrayTable,
-  Select,
+  Select
 } from '@formily/next-components'
 import RegInput from './components/RegInput/RegInput'
 import * as rulesUtil from './libs/rulesUtil'
@@ -19,7 +19,7 @@ import * as regUtil from './libs/regUtil'
 
 import { IRulesWidgetProps } from '../../types'
 
-const RulesWidget : React.FC<IRulesWidgetProps> = props => {
+const RulesWidget: React.FC<IRulesWidgetProps> = props => {
   const {
     defaultValue = [],
     locale = {},
@@ -45,7 +45,7 @@ const RulesWidget : React.FC<IRulesWidgetProps> = props => {
     if (!controlled) {
       setCurrentValue(rules)
     }
-    
+
     onChange(rules)
   }
 
@@ -74,7 +74,7 @@ const RulesWidget : React.FC<IRulesWidgetProps> = props => {
           RadioGroup: Radio.Group,
           ArrayTable,
           Select,
-          RegInput,
+          RegInput
         }}
       >
         <Field
@@ -84,11 +84,10 @@ const RulesWidget : React.FC<IRulesWidgetProps> = props => {
           x-component="RadioGroup"
           enum={[
             { label: '是', value: true },
-            { label: '否', value: false },
+            { label: '否', value: false }
           ]}
         />
-        {
-          lowercase(xComponent) === lowercase('input') ?
+        {lowercase(xComponent) === lowercase('input') ? (
           <Field
             type="string"
             title="格式"
@@ -96,8 +95,8 @@ const RulesWidget : React.FC<IRulesWidgetProps> = props => {
             x-component="Select"
             x-component-props={{
               style: {
-                minWidth: '150px',
-              },
+                minWidth: '150px'
+              }
             }}
             enum={[
               { label: '无', value: '' },
@@ -112,12 +111,11 @@ const RulesWidget : React.FC<IRulesWidgetProps> = props => {
               { label: 'Money', value: 'money' },
               { label: 'Zh', value: 'zh' },
               { label: 'Date', value: 'date' },
-              { label: 'Zip', value: 'zip' },
+              { label: 'Zip', value: 'zip' }
             ]}
-          /> : null
-        }
-        {
-          type === 'number' ?
+          />
+        ) : null}
+        {type === 'number' ? (
           <Field
             type="number"
             title="最大值"
@@ -132,10 +130,9 @@ const RulesWidget : React.FC<IRulesWidgetProps> = props => {
             //     }
             //   },
             // }}
-          /> : null
-        }
-        {
-          type === 'number' ?
+          />
+        ) : null}
+        {type === 'number' ? (
           <Field
             type="number"
             title="最小值"
@@ -150,10 +147,9 @@ const RulesWidget : React.FC<IRulesWidgetProps> = props => {
             //     }
             //   },
             // }}
-          /> : null
-        }
-        {
-          type === 'array' ?
+          />
+        ) : null}
+        {type === 'array' ? (
           <Field
             type="number"
             title="最大长度"
@@ -168,10 +164,9 @@ const RulesWidget : React.FC<IRulesWidgetProps> = props => {
             //     }
             //   },
             // }}
-          /> : null
-        }
-        {
-          type === 'array' ?
+          />
+        ) : null}
+        {type === 'array' ? (
           <Field
             type="number"
             title="最小长度"
@@ -186,10 +181,9 @@ const RulesWidget : React.FC<IRulesWidgetProps> = props => {
             //     }
             //   },
             // }}
-          /> : null
-        }
-        {
-          lowercase(xComponent) === lowercase('input') ?
+          />
+        ) : null}
+        {lowercase(xComponent) === lowercase('input') ? (
           <Field
             type="array"
             title="正则规则"
@@ -199,7 +193,7 @@ const RulesWidget : React.FC<IRulesWidgetProps> = props => {
               // operationsWidth: 50,
               // renderMoveDown: () => null,
               // renderMoveUp: () => null,
-              canRemoveAll: true,
+              canRemoveAll: true
             }}
           >
             <Field type="object">
@@ -228,8 +222,8 @@ const RulesWidget : React.FC<IRulesWidgetProps> = props => {
                 x-component="Input"
               />
             </Field>
-          </Field> : null
-        }
+          </Field>
+        ) : null}
       </SchemaForm>
     </div>
   )

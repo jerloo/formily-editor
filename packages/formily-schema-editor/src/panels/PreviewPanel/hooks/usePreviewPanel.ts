@@ -5,6 +5,6 @@ export const useFullScreen = (defaultIsFullScreen = false) => {
 
   return {
     isFullScreen,
-    setIsFullScreen,
+    setIsFullScreen
   }
 }

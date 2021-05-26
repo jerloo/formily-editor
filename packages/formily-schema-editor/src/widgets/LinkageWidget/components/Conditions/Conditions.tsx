@@ -4,9 +4,7 @@ import Condition from '../Condition/Condition'
 import * as listUtil from '../../libs/listUtil'
 import './style.scss'
 
-const Conditions = ({
-  value,
-}) => {
+const Conditions = ({ value }) => {
   const { changed } = useContext(LinkageContext)
 
   const onConditionAdd = (condition, afterCondition) => {
@@ -15,7 +13,7 @@ const Conditions = ({
     changed()
   }
 
-  const onConditionDelete = (condition) => {
+  const onConditionDelete = condition => {
     listUtil.deleteItem(value, condition)
 
     changed()
@@ -23,16 +21,14 @@ const Conditions = ({
 
   return (
     <div className="linkage-conditions">
-      {
-        value.map((condition, index) => (
-          <Condition
-            key={index}
-            value={condition}
-            onAdd={onConditionAdd}
-            onDelete={onConditionDelete}
-          />
-        ))
-      }
+      {value.map((condition, index) => (
+        <Condition
+          key={index}
+          value={condition}
+          onAdd={onConditionAdd}
+          onDelete={onConditionDelete}
+        />
+      ))}
     </div>
   )
 }

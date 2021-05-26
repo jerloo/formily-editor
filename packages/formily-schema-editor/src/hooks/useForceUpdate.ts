@@ -14,7 +14,7 @@ export function useForceUpdate(): () => void {
     if (!updating.current) dispatch(Object.create(null))
     else {
       clearTimeout(timer.current)
-      timer.current = setTimeout(()=>{
+      timer.current = setTimeout(() => {
         dispatch(Object.create(null))
       })
     }

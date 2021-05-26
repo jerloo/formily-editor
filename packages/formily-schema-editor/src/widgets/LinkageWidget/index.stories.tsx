@@ -1,11 +1,7 @@
 import React, { useState } from 'react'
 import LinkageWidget from './index'
 import { Button } from '@alifd/next'
-import {
-  Form,
-  FormItem,
-  SchemaForm,
-} from '@formily/next'
+import { Form, FormItem, SchemaForm } from '@formily/next'
 import { Input } from '@formily/next-components'
 import ArrayTableInput from './components/ArrayTableInput/ArrayTableInput'
 import '@alifd/next/dist/next.css'
@@ -16,22 +12,16 @@ export const Demo = () => {
   const [linkages, setLinkages] = useState([])
 
   const onChange = linkages => {
-
     setLinkages(linkages)
   }
 
-  return (
-    <LinkageWidget
-      value={linkages}
-      onChange={onChange}
-    />
-  )
+  return <LinkageWidget value={linkages} onChange={onChange} />
 }
 
 export const TestForm = () => {
   const [value, setValue] = useState({
     xxx: '123',
-    _: '',
+    _: ''
   })
 
   // const onChange = _value => {
@@ -43,7 +33,7 @@ export const TestForm = () => {
   const onClick = () => {
     setValue({
       xxx: '321',
-      _: Math.random() + '',
+      _: Math.random() + ''
     })
   }
 
@@ -78,9 +68,9 @@ export const TestSchemaForm = () => {
             condition: '{{$self.value=="ok"}}',
             target: 'field2',
             state: {
-              value: 'xxx',
+              value: 'xxx'
             },
-            otherwise: {},
+            otherwise: {}
           },
           {
             name: '',
@@ -89,17 +79,17 @@ export const TestSchemaForm = () => {
             target: 'field2',
             state: {},
             otherwise: {
-              value: 'yyy',
-            },
-          },
-        ],
+              value: 'yyy'
+            }
+          }
+        ]
       },
       field2: {
         type: 'string',
         title: 'field2',
-        'x-component': 'input',
-      },
-    },
+        'x-component': 'input'
+      }
+    }
   }
 
   return (

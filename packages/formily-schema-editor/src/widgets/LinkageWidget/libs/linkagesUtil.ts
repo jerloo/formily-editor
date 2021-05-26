@@ -22,7 +22,7 @@ export function transform(linkages) {
   let lastMeetActions
   let lastMissActions
 
-  let pushAction = linkage => {
+  const pushAction = linkage => {
     if (linkageHasAction(linkage)) {
       if (isMissLinkage(linkage)) {
         lastMissActions.push(actionUtil.transform(linkage, false))
@@ -47,7 +47,7 @@ export function transform(linkages) {
         id: lastId,
         conditions: conditionUtil.transform(lastCondition),
         meetActions: lastMeetActions,
-        missActions: lastMissActions,
+        missActions: lastMissActions
       })
 
       pushAction(linkage)
@@ -76,15 +76,18 @@ export function restore(rules) {
         name: '',
         type: 'value:state',
         condition,
-        target: '',
+        target: ''
       })
     }
 
-    linkages.push(...meetActions.map(action => {
-      return actionUtil.restore(action, condition, id)
-    }), ...missActions.map(action => {
-      return actionUtil.restore(action, condition, id)
-    }))
+    linkages.push(
+      ...meetActions.map(action => {
+        return actionUtil.restore(action, condition, id)
+      }),
+      ...missActions.map(action => {
+        return actionUtil.restore(action, condition, id)
+      })
+    )
   }
 
   return linkages

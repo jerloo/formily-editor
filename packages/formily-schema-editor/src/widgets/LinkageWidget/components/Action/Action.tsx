@@ -1,16 +1,13 @@
 import React, { useContext } from 'react'
 import { LinkageContext, RuleContext } from '../../context'
-import {
-  Input,
-  Select,
-} from '@alifd/next'
+import { Input, Select } from '@alifd/next'
 import SquareBtn from '../../../../components/SquareBtn'
 import ArrayTableInput from '../ArrayTableInput/ArrayTableInput'
 import './style.scss'
 
 const booleanEnum = [
   { label: '是', value: true },
-  { label: '否', value: false },
+  { label: '否', value: false }
 ]
 
 const propEnum = [
@@ -19,42 +16,37 @@ const propEnum = [
   { label: '禁用', value: 'disabled' },
   { label: '可编辑', value: 'editable' },
   { label: '数据源', value: 'enum' },
-  { label: '接口地址', value: 'url' },
+  { label: '接口地址', value: 'url' }
 ]
 
 const propInfo = {
   value: {
     type: 'string',
-    default: '',
+    default: ''
   },
   visible: {
     type: 'boolean',
-    default: true,
+    default: true
   },
   disabled: {
     type: 'boolean',
-    default: true,
+    default: true
   },
   editable: {
     type: 'boolean',
-    default: true,
+    default: true
   },
   enum: {
     type: 'array',
-    default: [],
+    default: []
   },
   url: {
     type: 'string',
-    default: '',
-  },
+    default: ''
+  }
 }
 
-const Action = ({
-  index,
-  value,
-  onAdd,
-  onDelete,
-}) => {
+const Action = ({ index, value, onAdd, onDelete }) => {
   const { changed } = useContext(LinkageContext)
   const { rule } = useContext(RuleContext)
 
@@ -104,10 +96,7 @@ const Action = ({
 
   const onValueChange = _value => {
     if (peer) {
-      if (
-        typeof _value === 'boolean' &&
-        peer.prop === value.prop
-      ) {
+      if (typeof _value === 'boolean' && peer.prop === value.prop) {
         peer.value = !_value
       }
     }
@@ -118,12 +107,15 @@ const Action = ({
   }
 
   const onAddClick = () => {
-    onAdd({
-      isMeet: value.isMeet,
-      target: '',
-      prop: 'value',
-      value: '',
-    }, value)
+    onAdd(
+      {
+        isMeet: value.isMeet,
+        target: '',
+        prop: 'value',
+        value: ''
+      },
+      value
+    )
   }
 
   const onDeleteClick = () => {
@@ -148,22 +140,25 @@ const Action = ({
         {(() => {
           switch (propInfo[value.prop].type) {
             case 'boolean':
-              return <Select
-                dataSource={booleanEnum}
-                value={value.value}
-                onChange={onValueChange}
-              />
+              return (
+                <Select
+                  dataSource={booleanEnum}
+                  value={value.value}
+                  onChange={onValueChange}
+                />
+              )
             case 'string':
-              return <Input
-                className="value-input"
-                value={value.value}
-                onChange={onValueChange}
-              />
+              return (
+                <Input
+                  className="value-input"
+                  value={value.value}
+                  onChange={onValueChange}
+                />
+              )
             case 'array':
-              return <ArrayTableInput
-                value={value.value}
-                onChange={onValueChange}
-              />
+              return (
+                <ArrayTableInput value={value.value} onChange={onValueChange} />
+              )
           }
         })()}
       </div>

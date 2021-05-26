@@ -5,35 +5,35 @@ import { SchemaForm, registerFormField } from '@formily/next'
 
 export default { title: 'SimpleArrayTable' }
 
-registerFormField('simpleArrayTable', (props) => {
+registerFormField('simpleArrayTable', props => {
   // console.log(props)
   return <SimpleArrayTable {...props} />
 })
 
 const schema = {
-  type: "object",
+  type: 'object',
   properties: {
     dataSource: {
-      type: "array",
-      "x-component": "simpleArrayTable", 
-      "x-component-props": {
-        canRemoveAll: true,
+      type: 'array',
+      'x-component': 'simpleArrayTable',
+      'x-component-props': {
+        canRemoveAll: true
       },
       items: {
-        type: "object",
+        type: 'object',
         properties: {
           label: {
-            type: "string",
+            type: 'string',
             required: true,
-            "x-component-props": {
-              placeholder: "label"
+            'x-component-props': {
+              placeholder: 'label'
             }
           },
           value: {
-            type: "string",
+            type: 'string',
             required: true,
-            "x-component-props": {
-              placeholder: "value"
+            'x-component-props': {
+              placeholder: 'value'
             }
           }
         }
@@ -43,5 +43,9 @@ const schema = {
 }
 
 export const Demo = () => {
-  return <div><SchemaForm schema={schema} /></div>
+  return (
+    <div>
+      <SchemaForm schema={schema} />
+    </div>
+  )
 }

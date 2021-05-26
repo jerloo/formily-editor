@@ -1,5 +1,5 @@
 {
-  "name": "@formily-editor/extensions",
+  "name": "formily-editor-extensions",
   "description": "",
   "main": "build/index.js",
   "version": "1.0.0-alpha.2",

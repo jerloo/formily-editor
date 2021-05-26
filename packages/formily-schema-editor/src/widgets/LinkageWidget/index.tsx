@@ -12,106 +12,100 @@ import rulesEqual from './libs/rulesEqual'
 import { LinkageWidgetProps } from '../../types'
 import './style.scss'
 
-const LinkageWidget = React.memo(({
-  locale = {},
-  value,
-  onChange,
-}: LinkageWidgetProps) => {
-  const { schema, selectedPath } = useEditor()
-  const boxRef = useRef(null)
-  const [currentValue, setCurrentValue] = useState(value)
+const LinkageWidget = React.memo(
+  ({ locale = {}, value, onChange }: LinkageWidgetProps) => {
+    const { schema, selectedPath } = useEditor()
+    const boxRef = useRef(null)
+    const [currentValue, setCurrentValue] = useState(value)
 
-  const rules = linkagesUtil.transform(currentValue || [])
+    const rules = linkagesUtil.transform(currentValue || [])
 
-  if (!rulesEqual(currentValue, value)) {
-    setCurrentValue(value)
-  }
+    if (!rulesEqual(currentValue, value)) {
+      setCurrentValue(value)
+    }
 
-  const onAddClick = () => {
-    rules.push({
-      id: getRuleId(),
-      conditions: [
-        Condition.getDefaultCondition(field, true),
-      ],
-      meetActions: [
-        { isMeet: true, target: '', prop: 'value', value: '' },
-      ],
-      missActions: [
-        { isMeet: false, target: '', prop: 'value', value: '' },
-      ],
-    })
+    const onAddClick = () => {
+      rules.push({
+        id: getRuleId(),
+        conditions: [Condition.getDefaultCondition(field, true)],
+        meetActions: [{ isMeet: true, target: '', prop: 'value', value: '' }],
+        missActions: [{ isMeet: false, target: '', prop: 'value', value: '' }]
+      })
 
-    changed()
+      changed()
 
-    setTimeout(() => {
-      const node = boxRef.current
-      if (node) node.scrollTop = node.scrollHeight
-    }, 0)
-  }
+      setTimeout(() => {
+        const node = boxRef.current
+        if (node) node.scrollTop = node.scrollHeight
+      }, 0)
+    }
 
-  const schemNode = schema.get(selectedPath.entire)
-  if (!schemNode) return null
-  let field = schemNode.toJSON()
+    const schemNode = schema.get(selectedPath.entire)
+    if (!schemNode) return null
+    const field = schemNode.toJSON()
 
-  const changed = () => {
-    const linkages = linkagesUtil.restore(rules)
+    const changed = () => {
+      const linkages = linkagesUtil.restore(rules)
 
-    setCurrentValue(linkages)
+      setCurrentValue(linkages)
 
-    onChange(linkages)
-  }
+      onChange(linkages)
+    }
 
-  const ee = new EventEmitter()
+    const ee = new EventEmitter()
 
-  const onFoldAllClick = () => {
-    ee.emit('foldAll')
-  }
+    const onFoldAllClick = () => {
+      ee.emit('foldAll')
+    }
 
-  const onRuleDelete = rule => {
-    listUtil.deleteItem(rules, rule)
+    const onRuleDelete = rule => {
+      listUtil.deleteItem(rules, rule)
 
-    changed()
-  }
+      changed()
+    }
 
-  return (
-    <LinkageContext.Provider value={{
-      locale,
-      changed,
-      ee,
-      schema,
-      field,
-    }}>
-      <div ref={boxRef} className="linkage-widget-box">
-        {/* <Message closeable={false} type="notice">
+    return (
+      <LinkageContext.Provider
+        value={{
+          locale,
+          changed,
+          ee,
+          schema,
+          field
+        }}
+      >
+        <div ref={boxRef} className="linkage-widget-box">
+          {/* <Message closeable={false} type="notice">
           调整字段顺序后需手动修改目标字段的路径
         </Message> */}
-        <div className="linkage-widget">
-          {
-            false && rules.length > 1 ?
-            <div className="toolbar">
-              <Button size="small" onClick={onFoldAllClick}>全部收起</Button>
-            </div> :
-            null
-          }
-          <div className="rule-list">
-            {
-              rules.map((rule, index) => (
+          <div className="linkage-widget">
+            {false && rules.length > 1 ? (
+              <div className="toolbar">
+                <Button size="small" onClick={onFoldAllClick}>
+                  全部收起
+                </Button>
+              </div>
+            ) : null}
+            <div className="rule-list">
+              {rules.map((rule, index) => (
                 <Rule
                   key={rule.id}
                   title={`规则 ${index + 1}`}
                   value={rule}
                   onDelete={onRuleDelete}
                 />
-              ))
-            }
-          </div>
-          <div className="add-new" onClick={onAddClick}>
-            <Button size="large" text type="primary">添加规则</Button>
+              ))}
+            </div>
+            <div className="add-new" onClick={onAddClick}>
+              <Button size="large" text type="primary">
+                添加规则
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </LinkageContext.Provider>
-  )
-})
+      </LinkageContext.Provider>
+    )
+  }
+)
 
 export default LinkageWidget

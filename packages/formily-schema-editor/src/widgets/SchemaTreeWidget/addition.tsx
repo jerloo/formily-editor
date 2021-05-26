@@ -1,31 +1,33 @@
-import React, { useRef, useEffect } from 'react';
-import MoveTo from 'moveto';
+import React, { useRef, useEffect } from 'react'
+import MoveTo from 'moveto'
 import {
-  SchemaForm, 
+  SchemaForm,
   SchemaMarkupField as Field,
   FormButtonGroup,
   createAsyncFormActions
-} from '@formily/next';
-import { Input, Select, Button } from '@alifd/next';
-import { IFormProps } from '../../types';
+} from '@formily/next'
+import { Input, Select, Button } from '@alifd/next'
+import { IFormProps } from '../../types'
 
 const env = {
   nonameId: 0
 }
 
 const transFormTypeDataSource = (types = []) => {
-
   return types.map(type => {
-    const { children = [], ...others } = type;
+    const { children = [], ...others } = type
 
     return {
       ...others,
-      children: children.map(item => ({...item, value: `${item.type}/${item.value}`}))
+      children: children.map(item => ({
+        ...item,
+        value: `${item.type}/${item.value}`
+      }))
     }
   })
 }
 
-const Form: React.FC<IFormProps> = (props) => {
+const Form: React.FC<IFormProps> = props => {
   const ref = useRef(null)
   const actionRef = useRef(createAsyncFormActions())
 
@@ -39,24 +41,24 @@ const Form: React.FC<IFormProps> = (props) => {
   }, [])
 
   const handleCancel = () => {
-    props.onCancel();
+    props.onCancel()
   }
 
   const handleUpdate = () => {
-    actionRef.current.validate().then(async() => {
-      const form = await Promise.resolve(actionRef.current.getFormState(form => {
-        return form.values
-      }))
-      if(form['x-component'] === 'object'){
+    actionRef.current.validate().then(async () => {
+      const form = await Promise.resolve(
+        actionRef.current.getFormState(form => {
+          return form.values
+        })
+      )
+      if (form['x-component'] === 'object') {
         delete form['x-component']
-      } 
-      else {
+      } else {
         form['x-component'] = form['x-component'].split('/')[1]
       }
       props.onUpdate(form)
     })
   }
-
 
   return (
     <div ref={ref} className="rst__formWrapper__content">
@@ -64,7 +66,7 @@ const Form: React.FC<IFormProps> = (props) => {
         labelAlign="left"
         labelTextAlign="left"
         labelCol={{ span: 6 }}
-        wrapperCol={{ span: 18}}
+        wrapperCol={{ span: 18 }}
         components={{
           Input,
           Select
@@ -74,28 +76,32 @@ const Form: React.FC<IFormProps> = (props) => {
         actions={actionRef.current}
         effects={($, { setFieldState }) => {
           $('onFieldValueChange', 'x-component').subscribe(({ value }) => {
-            if(!value)return
+            if (!value) return
 
             const [type, component] = value.split('/')
 
             setFieldState('type', state => {
-              state.value =type
+              state.value = type
             })
 
             setFieldState('title', state => {
               state.visible = type.toLowerCase() !== 'layout'
             })
 
-            if(type.toLowerCase() === 'layout'){
+            if (type.toLowerCase() === 'layout') {
               setFieldState('key', state => {
-                if(!state.value)state.value = `${component}_${env.nonameId++}`
+                if (!state.value) state.value = `${component}_${env.nonameId++}`
               })
             }
           })
 
           $('onFieldChange', 'key').subscribe(({ value }) => {
-            const ancestorChildren = (props.parent.parentNode || {}).children || []
-            if (ancestorChildren.filter(child => child.data.key == value).length > 0) {
+            const ancestorChildren =
+              (props.parent.parentNode || {}).children || []
+            if (
+              ancestorChildren.filter(child => child.data.key == value).length >
+              0
+            ) {
               setFieldState('key', state => {
                 state.errors = [`该层级存在同名节点${value}，添加失败!`]
               })
@@ -114,7 +120,7 @@ const Form: React.FC<IFormProps> = (props) => {
           x-component="TypeCascaderSelector"
           required
           x-component-props={{
-            dataSource: transFormTypeDataSource(props.types),
+            dataSource: transFormTypeDataSource(props.types)
           }}
         />
         <Field
@@ -122,20 +128,22 @@ const Form: React.FC<IFormProps> = (props) => {
           name="key"
           x-component="Input"
           x-props={{
-            placeholder: '同层级节点的唯一标识别',
+            placeholder: '同层级节点的唯一标识别'
           }}
           required
-          x-rules={[{
-            pattern: /^[0-9a-zA-Z_]{1,}$/,
-            message: '请输入由数字，字母或下划线组成的标识'
-          }]}
+          x-rules={[
+            {
+              pattern: /^[0-9a-zA-Z_]{1,}$/,
+              message: '请输入由数字，字母或下划线组成的标识'
+            }
+          ]}
         />
         <Field
           title="标题:"
           name="title"
           x-component="Input"
           x-props={{
-            placeholder: '配置项字段标签',
+            placeholder: '配置项字段标签'
           }}
         />
         <Field
@@ -145,12 +153,14 @@ const Form: React.FC<IFormProps> = (props) => {
           display={false}
           editable={false}
         />
-      <FormButtonGroup align="right">
-        <Button onClick={handleCancel}>取消</Button>
-        <Button onClick={handleUpdate} type="primary">确定</Button>
-      </FormButtonGroup>
-    </SchemaForm>
-  </div>
+        <FormButtonGroup align="right">
+          <Button onClick={handleCancel}>取消</Button>
+          <Button onClick={handleUpdate} type="primary">
+            确定
+          </Button>
+        </FormButtonGroup>
+      </SchemaForm>
+    </div>
   )
 }
 

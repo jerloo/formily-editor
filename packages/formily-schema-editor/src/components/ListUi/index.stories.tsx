@@ -7,17 +7,24 @@ export default { title: 'ListUI' }
 registerFormField('ListUI', connect()(ListUI))
 
 const schema = {
-  type: "object",
+  type: 'object',
   properties: {
     dataSource: {
-      type: "array",
-      "x-component": "ListUI", 
+      type: 'array',
+      'x-component': 'ListUI'
     }
   }
 }
 
 export const Demo = () => {
-  return <div><SchemaForm onChange={v => {
-    console.log(v)
-  }} schema={schema} /></div>
+  return (
+    <div>
+      <SchemaForm
+        onChange={v => {
+          console.log(v)
+        }}
+        schema={schema}
+      />
+    </div>
+  )
 }

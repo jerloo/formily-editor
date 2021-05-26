@@ -3,19 +3,9 @@ import { Input, Select } from '@alifd/next'
 import * as regUtil from '../../libs/regUtil'
 import './style.scss'
 
-const flagsEnum = [
-  'g',
-  'i',
-  'm',
-  's',
-  'u',
-  'y',
-]
+const flagsEnum = ['g', 'i', 'm', 's', 'u', 'y']
 
-const RegInput = ({
-  value,
-  onChange,
-}) => {
+const RegInput = ({ value, onChange }) => {
   const [content, flags] = regUtil.transform(value)
 
   const onContentChange = _content => {

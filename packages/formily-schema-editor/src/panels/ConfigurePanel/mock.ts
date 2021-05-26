@@ -9,7 +9,7 @@ export const props = {
   // commonConfigSchema: new Schema(getCommonConfigSchema(type)),
   extensionSchema: new Schema({}),
   locale: {
-    title: '标题',
+    title: '标题'
   },
   types: [{ label: 'string', value: 'string' }],
   xComponents: [{ label: '输入框', value: 'input' }]

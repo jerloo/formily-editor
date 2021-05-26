@@ -1,5 +1,3 @@
-
-
 // import { LifeCycleTypes } from '@formily/next'
 
 // // 根据节点类型联动控件类型
@@ -16,29 +14,34 @@
 //       state.props['x-component-props'] = state.props['x-component-props'] || {}
 
 //       if(value === 'object'){}
-//       state.props['x-component-props'].dataSource = 
+//       state.props['x-component-props'].dataSource =
 //       (state.props['x-component-props'].xComponents || []).filter(item => item.type === value)
 //     })
 //   })
 // }
 
-
 import { LifeCycleTypes } from '@formily/react-schema-renderer'
 
-
 const TYPE_PATH = 'tabs.propertyTabPane.basicConfigure.commconConfig.type'
-const X_XOMPONENT_PATH = 'tabs.propertyTabPane.basicConfigure.commconConfig.x-component'
+const X_XOMPONENT_PATH =
+  'tabs.propertyTabPane.basicConfigure.commconConfig.x-component'
 
-export default ({ xComponents, xComponentPath = X_XOMPONENT_PATH, typePath = TYPE_PATH }) => ($, { setFieldState }) => {
-  $(LifeCycleTypes.ON_FIELD_VALUE_CHANGE, xComponentPath).subscribe(({ value }) => {
-    const { type } = xComponents.find(item => item.value === value)
+export default ({
+  xComponents,
+  xComponentPath = X_XOMPONENT_PATH,
+  typePath = TYPE_PATH
+}) => ($, { setFieldState }) => {
+  $(LifeCycleTypes.ON_FIELD_VALUE_CHANGE, xComponentPath).subscribe(
+    ({ value }) => {
+      const { type } = xComponents.find(item => item.value === value)
 
-    setFieldState(typePath, state => {
-      state.value = type
-    })
-  })
+      setFieldState(typePath, state => {
+        state.value = type
+      })
+    }
+  )
 
-  $(LifeCycleTypes.ON_FIELD_VALUE_CHANGE, typePath).subscribe((state) => {
+  $(LifeCycleTypes.ON_FIELD_VALUE_CHANGE, typePath).subscribe(state => {
     state.props['x-component-props'] = state.props['x-component-props'] || {}
 
     const { dataSource = [] } = state.props['x-component-props']

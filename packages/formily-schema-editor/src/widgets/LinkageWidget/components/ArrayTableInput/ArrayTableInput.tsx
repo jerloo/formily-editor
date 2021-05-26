@@ -1,15 +1,9 @@
 import React from 'react'
 import './style.scss'
 import { SchemaForm, SchemaMarkupField as Field } from '@formily/next'
-import {
-  Input,
-  ArrayTable,
-} from '@formily/next-components'
+import { Input, ArrayTable } from '@formily/next-components'
 
-const ArrayTableInput = ({
-  value = [],
-  onChange,
-}) => {
+const ArrayTableInput = ({ value = [], onChange }) => {
   const onFormChange = newValue => {
     // console.log('---', newValue)
 
@@ -38,7 +32,7 @@ const ArrayTableInput = ({
             // renderMoveDown: () => null,
             // renderMoveUp: () => null,
             // dragable: true,
-            canRemoveAll: true,
+            canRemoveAll: true
           }}
         >
           <Field type="object">

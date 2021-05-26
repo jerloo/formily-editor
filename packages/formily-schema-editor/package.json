@@ -1,5 +1,5 @@
 {
-	"name": "formily-schema-editor",
+	"name": "formily-editor",
 	"license": "MIT",
 	"main": "lib",
 	"types": "lib/index.d.ts",
@@ -23,7 +23,7 @@
 		"start": "start-storybook"
 	},
 	"devDependencies": {
-		"@formily-editor/extensions": "^1.0.0-alpha.2",
+		"formily-editor-extensions": "^1.0.0-alpha.2",
 		"@formily/next": "1.2.0",
 		"@formily/next-components": "1.2.0",
 		"@formily/printer": "1.2.0",

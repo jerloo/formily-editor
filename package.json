@@ -5,7 +5,7 @@
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "build": "rimraf -rf packages/*/lib && lerna run build",
-    "start": "lerna run --scope formily-schema-editor start",
+    "start": "lerna run --scope formily-editor start",
     "lint": "eslint --ext .ts,.tsx \"packages/*/src/**.@(ts|tsx|js)\" --fix",
     "prevesion": "npm run build && npm run lint",
     "version:alpha": "npm run prevesion && lerna version prerelease --preid alpha --force-publish=* --no-git-tag-version -m \"chore(versions): publish packages %s\"",

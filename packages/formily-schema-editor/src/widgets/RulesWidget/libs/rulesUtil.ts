@@ -7,23 +7,23 @@ export function transform(rules, type) {
     ruleDesp = {
       required: false,
       format: '',
-      patterns: [],
+      patterns: []
     }
   } else if (type === 'number') {
     ruleDesp = {
       required: false,
       maximum: undefined,
-      minimum: undefined,
+      minimum: undefined
     }
   } else if (type === 'array') {
     ruleDesp = {
       required: false,
       max: undefined,
-      min: undefined,
+      min: undefined
     }
   } else {
     ruleDesp = {
-      required: false,
+      required: false
     }
   }
 
@@ -40,7 +40,7 @@ export function transform(rules, type) {
       if ('pattern' in rule) {
         ruleDesp.patterns.push({
           pattern: rule.pattern ? regUtil.toStr(rule.pattern) : '',
-          message: rule.message,
+          message: rule.message
         })
       }
     } else if (type === 'number') {
@@ -81,10 +81,12 @@ export function restore(ruleDesp, type) {
     }
 
     if (ruleDesp.patterns) {
-      rules.push(...ruleDesp.patterns.map(pattern => ({
-        pattern: pattern.pattern,
-        message: pattern.message,
-      })))
+      rules.push(
+        ...ruleDesp.patterns.map(pattern => ({
+          pattern: pattern.pattern,
+          message: pattern.message
+        }))
+      )
     }
   } else if (type === 'number') {
     if (ruleDesp.maximum !== undefined) {

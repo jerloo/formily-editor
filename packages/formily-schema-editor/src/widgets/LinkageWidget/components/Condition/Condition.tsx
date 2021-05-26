@@ -1,45 +1,53 @@
 import React, { useContext } from 'react'
 import { LinkageContext } from '../../context'
-import {
-  Input,
-  Select,
-  NumberPicker,
-} from '@alifd/next'
+import { Input, Select, NumberPicker } from '@alifd/next'
 import RegInput from '../../components/RegInput/RegInput'
 import SquareBtn from '../../../../components/SquareBtn'
 import './style.scss'
 
 const logicEnum = [
   { label: '且', value: 'and' },
-  { label: '或', value: 'or' },
+  { label: '或', value: 'or' }
 ]
 
 const booleanEnum = [
   { label: '是', value: true },
-  { label: '否', value: false },
+  { label: '否', value: false }
 ]
 
-const getTargetEnum = (type) => {
+const getTargetEnum = type => {
   return removeFalsy([
-    (type !== 'array') && { label: '值', value: 'value' },
-    (type === 'array') && { label: '长度', value: 'length' },
+    type !== 'array' && { label: '值', value: 'value' },
+    type === 'array' && { label: '长度', value: 'length' }
   ])
 }
 
 const getOperatorEnum = (type, target) => {
   return removeFalsy([
-    (target !== 'length') && { label: '存在', value: 'exist' },
-    (target !== 'length') && { label: '不存在', value: 'notExist' },
-    (true) && { label: '等于', value: 'equal' },
-    (true) && { label: '不等于', value: 'notEqual' },
-    (type === 'number' || target === 'length') && { label: '大于', value: 'largeThan' },
-    (type === 'number' || target === 'length') && { label: '大于等于', value: 'largeThanEqual' },
-    (type === 'number' || target === 'length') && { label: '小于', value: 'lessThan' },
-    (type === 'number' || target === 'length') && { label: '小于等于', value: 'lessThanEqual' },
-    (type === 'string') && { label: '包含', value: 'includes' },
-    (type === 'string') && { label: '以...开头', value: 'startsWith' },
-    (type === 'string') && { label: '以...结尾', value: 'endsWith' },
-    (type === 'string') && { label: '匹配', value: 'match' },
+    target !== 'length' && { label: '存在', value: 'exist' },
+    target !== 'length' && { label: '不存在', value: 'notExist' },
+    true && { label: '等于', value: 'equal' },
+    true && { label: '不等于', value: 'notEqual' },
+    (type === 'number' || target === 'length') && {
+      label: '大于',
+      value: 'largeThan'
+    },
+    (type === 'number' || target === 'length') && {
+      label: '大于等于',
+      value: 'largeThanEqual'
+    },
+    (type === 'number' || target === 'length') && {
+      label: '小于',
+      value: 'lessThan'
+    },
+    (type === 'number' || target === 'length') && {
+      label: '小于等于',
+      value: 'lessThanEqual'
+    },
+    type === 'string' && { label: '包含', value: 'includes' },
+    type === 'string' && { label: '以...开头', value: 'startsWith' },
+    type === 'string' && { label: '以...结尾', value: 'endsWith' },
+    type === 'string' && { label: '匹配', value: 'match' }
   ])
 }
 
@@ -60,7 +68,7 @@ const find = (list, test) => {
 const getFieldEnum = field => {
   return (
     field.enum ||
-    field['x-component-props'] && field['x-component-props'].dataSource ||
+    (field['x-component-props'] && field['x-component-props'].dataSource) ||
     null
   )
 }
@@ -107,11 +115,7 @@ const getDefaultValue = (field, valueType) => {
   }
 }
 
-const Condition = ({
-  value,
-  onAdd,
-  onDelete,
-}) => {
+const Condition = ({ value, onAdd, onDelete }) => {
   const { field, changed } = useContext(LinkageContext)
 
   const valueType = getValueType(field, value.target, value.operator)
@@ -164,7 +168,7 @@ const Condition = ({
   }
 
   const onAddAndClick = () => {
-    onAdd(getDefaultCondition(field, false) , value)
+    onAdd(getDefaultCondition(field, false), value)
   }
 
   const onDeleteClick = () => {
@@ -174,16 +178,16 @@ const Condition = ({
   return (
     <div className="linkage-condition">
       <div className="logic">
-        {
-          value.logic ?
-            <Select
-              className="xxx"
-              dataSource={logicEnum}
-              value={value.logic}
-              onChange={onLogicChange}
-            /> :
-            '触发条件：'
-        }
+        {value.logic ? (
+          <Select
+            className="xxx"
+            dataSource={logicEnum}
+            value={value.logic}
+            onChange={onLogicChange}
+          />
+        ) : (
+          '触发条件：'
+        )}
       </div>
       <div className="target">
         <Select
@@ -199,26 +203,38 @@ const Condition = ({
           onChange={onOperatorChange}
         />
       </div>
-      {
-        valueType !== 'none' ?
+      {valueType !== 'none' ? (
         <div className={`value ${valueType}`}>
           {(() => {
             switch (valueType) {
-            case 'enum':
-              return <Select dataSource={getFieldEnum(field)} value={value.value} onChange={onValueChange} />
-            case 'string':
-              return <Input value={value.value} onChange={onValueChange} />
-            case 'number':
-              return <NumberPicker value={value.value} onChange={onValueChange} />
-            case 'boolean':
-              return <Select dataSource={booleanEnum} value={value.value} onChange={onValueChange} />
-            case 'reg':
-              return <RegInput value={value.value} onChange={onValueChange} />
+              case 'enum':
+                return (
+                  <Select
+                    dataSource={getFieldEnum(field)}
+                    value={value.value}
+                    onChange={onValueChange}
+                  />
+                )
+              case 'string':
+                return <Input value={value.value} onChange={onValueChange} />
+              case 'number':
+                return (
+                  <NumberPicker value={value.value} onChange={onValueChange} />
+                )
+              case 'boolean':
+                return (
+                  <Select
+                    dataSource={booleanEnum}
+                    value={value.value}
+                    onChange={onValueChange}
+                  />
+                )
+              case 'reg':
+                return <RegInput value={value.value} onChange={onValueChange} />
             }
           })()}
-        </div> :
-        null
-      }
+        </div>
+      ) : null}
       <div className="buttons">
         <SquareBtn onClick={onAddAndClick}>+</SquareBtn>
         {value.logic ? <SquareBtn onClick={onDeleteClick}>-</SquareBtn> : null}
@@ -238,7 +254,7 @@ const getDefaultCondition = (field, isFirst) => {
     logic,
     target,
     operator,
-    value,
+    value
   }
 }
 

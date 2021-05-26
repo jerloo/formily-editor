@@ -1,14 +1,6 @@
-const stateOrSchemaProps = [
-  'value',
-  'visible',
-  'editable',
-  'enum',
-]
+const stateOrSchemaProps = ['value', 'visible', 'editable', 'enum']
 
-const componentProps = [
-  'disabled',
-  'url',
-]
+const componentProps = ['disabled', 'url']
 
 export function transform(linkage, isMeet) {
   let changeKey
@@ -38,7 +30,10 @@ export function transform(linkage, isMeet) {
 
     if (!prop) {
       for (const _prop of componentProps) {
-        if (change['x-component-props'] && _prop in change['x-component-props']) {
+        if (
+          change['x-component-props'] &&
+          _prop in change['x-component-props']
+        ) {
           prop = _prop
           value = change['x-component-props'][_prop]
 
@@ -52,7 +47,7 @@ export function transform(linkage, isMeet) {
     isMeet,
     target: linkage.target,
     prop,
-    value,
+    value
   }
 }
 
@@ -87,12 +82,12 @@ export function restore(action, condition, id) {
     condition,
     target: action.target,
     [type === 'value:state' ? 'state' : 'schema']: {},
-    otherwise: {},
+    otherwise: {}
   }
 
   if (componentProps.includes(action.prop)) {
     linkage[changeKey]['x-component-props'] = {
-      [action.prop]: action.value,
+      [action.prop]: action.value
     }
   } else {
     linkage[changeKey][action.prop] = action.value

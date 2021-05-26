@@ -1,4 +1,4 @@
-import { createContext } from "react";
-import { ISchemaEditor } from "../types";
+import { createContext } from 'react'
+import { ISchemaEditor } from '../types'
 
-export const EditorContext = createContext<ISchemaEditor>(null);
+export const EditorContext = createContext<ISchemaEditor>(null)

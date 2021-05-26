@@ -8,7 +8,7 @@ const operatorMap = {
   '>': 'largeThan',
   '>=': 'largeThanEqual',
   '<': 'lessThan',
-  '<=': 'lessThanEqual',
+  '<=': 'lessThanEqual'
 }
 
 const operatorMapReverse = {
@@ -17,7 +17,7 @@ const operatorMapReverse = {
   largeThan: '>',
   largeThanEqual: '>=',
   lessThan: '<',
-  lessThanEqual: '<=',
+  lessThanEqual: '<='
 }
 
 export function transform(conditionStr: string) {
@@ -31,58 +31,65 @@ export function transform(conditionStr: string) {
     return ''
   })
 
-  const conditions = conditionStr.split(/&&|\|\|/).map(trim).map(condition => {
-    let matched
+  const conditions = conditionStr
+    .split(/&&|\|\|/)
+    .map(trim)
+    .map(condition => {
+      let matched
 
-    matched = condition.match(/^\$self\.value(\.length)?\s*(===?|!==?|>=?|<=?)\s*(.+)$/)
+      matched = condition.match(
+        /^\$self\.value(\.length)?\s*(===?|!==?|>=?|<=?)\s*(.+)$/
+      )
 
-    if (matched) {
-      const target = matched[1] ? 'length' : 'value'
-      let operator = matched[2]
-      let value = matched[3]
+      if (matched) {
+        const target = matched[1] ? 'length' : 'value'
+        let operator = matched[2]
+        let value = matched[3]
 
-      if (value === 'undefined') {
-        if (operator === '==' || operator === '===') {
-          operator = 'notExist'
+        if (value === 'undefined') {
+          if (operator === '==' || operator === '===') {
+            operator = 'notExist'
+          } else {
+            operator = 'exist'
+          }
+
+          value = ''
         } else {
-          operator = 'exist'
+          operator = operatorMap[operator]
+          try {
+            value = JSON.parse(value)
+          } catch (err) {
+            value = value.replace(/(^['"])|(['"]$)/g, '')
+          }
         }
 
-        value = ''
-      } else {
-        operator = operatorMap[operator]
-        try {
-          value = JSON.parse(value)
-        } catch (err) {
-          value = value.replace(/(^['"])|(['"]$)/g, '')
-        }
+        return { target, operator, value }
       }
 
-      return { target, operator, value }
-    }
+      matched = condition.match(
+        /^\$self\.value\.(includes|startsWith|endsWith)\((.+)\)$/
+      )
 
-    matched = condition.match(/^\$self\.value\.(includes|startsWith|endsWith)\((.+)\)$/)
+      if (matched) {
+        const target = 'value'
+        const operator = matched[1]
+        const value = matched[2].replace(/(^['"])|(['"]$)/g, '')
 
-    if (matched) {
-      const target = 'value'
-      const operator = matched[1]
-      const value = matched[2].replace(/(^['"])|(['"]$)/g, '')
+        return { target, operator, value }
+      }
 
-      return { target, operator, value }
-    }
+      matched = condition.match(/^(.*)\.test\(\$self\.value\)$/)
 
-    matched = condition.match(/^(.*)\.test\(\$self\.value\)$/)
+      if (matched) {
+        const target = 'value'
+        const operator = 'match'
+        const value = matched[1]
 
-    if (matched) {
-      const target = 'value'
-      const operator = 'match'
-      const value = matched[1]
+        return { target, operator, value }
+      }
 
-      return { target, operator, value }
-    }
-
-    return null
-  })
+      return null
+    })
 
   const ret = []
   let isFirst = true
@@ -91,7 +98,7 @@ export function transform(conditionStr: string) {
     if (condition) {
       ret.push({
         logic: isFirst ? '' : logics[index - 1],
-        ...condition,
+        ...condition
       })
 
       if (isFirst) isFirst = false
@@ -115,10 +122,26 @@ export function restore(conditions) {
       expression = '$self.value !== undefined'
     } else if (condition.operator === 'notExist') {
       expression = '$self.value === undefined'
-    } else if (['equal', 'notEqual', 'largeThan', 'largeThanEqual', 'lessThan', 'lessThanEqual'].indexOf(condition.operator) >= 0) {
-      expression = `$self.value${condition.target === 'length' ? '.length' : ''}${operatorMapReverse[condition.operator]}${JSON.stringify(condition.value)}`
-    } else if (['includes', 'startsWith', 'endsWith'].indexOf(condition.operator) >= 0) {
-      expression = `$self.value.${condition.operator}(${JSON.stringify(condition.value)})`
+    } else if (
+      [
+        'equal',
+        'notEqual',
+        'largeThan',
+        'largeThanEqual',
+        'lessThan',
+        'lessThanEqual'
+      ].indexOf(condition.operator) >= 0
+    ) {
+      expression = `$self.value${condition.target === 'length' ? '.length' : ''
+        }${operatorMapReverse[condition.operator]}${JSON.stringify(
+          condition.value
+        )}`
+    } else if (
+      ['includes', 'startsWith', 'endsWith'].indexOf(condition.operator) >= 0
+    ) {
+      expression = `$self.value.${condition.operator}(${JSON.stringify(
+        condition.value
+      )})`
     } else if (condition.operator === 'match') {
       expression = `${condition.value}.test($self.value)`
     }

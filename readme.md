@@ -29,7 +29,7 @@ Formily提供了[JSON SCHEMA开发表单](https://formilyjs.org/#/0yTeT0/8MsesjH
 
 ```javascript
 import { SchemaEditor } from "@formily-editor/schema-editor";
-import extensions from "@formily-editor/extensions";
+import extensions from "formily-editor-extensions";
 
 const renderToolbar = (context) => {
   // 定制你的导航

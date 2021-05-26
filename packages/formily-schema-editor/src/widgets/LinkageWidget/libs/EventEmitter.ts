@@ -1,16 +1,16 @@
 type EventCallback = (this: EventEmitter, ...args: any[]) => void
 
 interface EventListener {
-	callback: EventCallback;
-	once: boolean;
+	callback: EventCallback
+	once: boolean
 }
 
 interface EventMap {
-	[eventName: string]: EventListener[];
+	[eventName: string]: EventListener[]
 }
 
 interface TimerMap {
-	[eventName: string]: ReturnType<typeof setTimeout>;
+	[eventName: string]: ReturnType<typeof setTimeout>
 }
 
 class EventEmitter {
@@ -25,10 +25,15 @@ class EventEmitter {
 		this._timers = Object.create(null)
 	}
 
-	private _addListener(name: string, callback: EventCallback, once: boolean): this {
-		if (typeof callback !== 'function') throw new TypeError('Event callback must be a function')
+	private _addListener(
+		name: string,
+		callback: EventCallback,
+		once: boolean
+	): this {
+		if (typeof callback !== 'function')
+			throw new TypeError('Event callback must be a function')
 
-		let listener = { callback, once }
+		const listener = { callback, once }
 
 		if (!this._events[name]) this._events[name] = []
 
@@ -46,11 +51,12 @@ class EventEmitter {
 	}
 
 	off(name: string, callback: EventCallback): this {
-		if (typeof callback !== 'function') throw new TypeError('Event callback must be a function')
+		if (typeof callback !== 'function')
+			throw new TypeError('Event callback must be a function')
 
 		if (!this._events[name]) return this
 
-		let listeners = this._events[name]
+		const listeners = this._events[name]
 
 		for (let i = listeners.length - 1; i >= 0; i--) {
 			if (listeners[i].callback === callback) {
@@ -67,10 +73,10 @@ class EventEmitter {
 
 	emit(name: string, ...args: any[]): this {
 		if (this._events[name]) {
-			let listeners = this._events[name]
+			const listeners = this._events[name]
 
 			for (let i = 0; i < listeners.length; i++) {
-				let listener = listeners[i]
+				const listener = listeners[i]
 
 				listener.callback.apply(this, args)
 
@@ -92,7 +98,7 @@ class EventEmitter {
 	}
 
 	emitDelay(time: number, name: string, ...args: any[]): this {
-		let ti = this._timers[name]
+		const ti = this._timers[name]
 
 		if (typeof ti === 'number') clearTimeout(ti)
 

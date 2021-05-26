@@ -1,5 +1,5 @@
 export default {
-  add:'添加',
+  add: '添加',
   form: '表单',
   title: '表单配置器',
   redo: '重做',

@@ -1,7 +1,16 @@
 import { registerFormFields, connect } from '@formily/next'
-import { Input, Select, NumberPicker, Radio, Checkbox, Switch, TimePicker, DatePicker, Rating } from '@alifd/next'
+import {
+  Input,
+  Select,
+  NumberPicker,
+  Radio,
+  Checkbox,
+  Switch,
+  TimePicker,
+  DatePicker,
+  Rating
+} from '@alifd/next'
 import withExpression from './index'
-
 
 export default () => {
   registerFormFields({

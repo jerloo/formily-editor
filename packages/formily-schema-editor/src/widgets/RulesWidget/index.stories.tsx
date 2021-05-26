@@ -3,7 +3,7 @@ import RulesWidget from './index'
 import RegInput from './components/RegInput/RegInput'
 import '@alifd/next/dist/next.css'
 
-export default { title: 'RulesWidget' };
+export default { title: 'RulesWidget' }
 
 export const Demo = () => {
   const [rules, setRules] = useState([])
@@ -16,10 +16,10 @@ export const Demo = () => {
 
   return (
     <div>
-      <RulesWidget value={rules} onChange={onChange} type='string' />
+      <RulesWidget value={rules} onChange={onChange} type="string" />
     </div>
   )
-};
+}
 
 export const TestRegInput = () => {
   const [reg, setReg] = useState('/.*/')

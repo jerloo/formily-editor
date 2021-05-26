@@ -4,8 +4,12 @@ import { Card } from '@alifd/next'
 import { CardProps } from '@alifd/next/types/card'
 import styled from 'styled-components'
 
-const Cube = ({ className, children, ...props } ) => {
-  return <Card className={className} {...props}>{children}</Card>
+const Cube = ({ className, children, ...props }) => {
+  return (
+    <Card className={className} {...props}>
+      {children}
+    </Card>
+  )
 }
 
 const CubeCard = styled(Cube)`
@@ -27,8 +31,7 @@ const CubeBlock = styled(Cube)`
 const FormCube = createVirtualBox<CardProps & { hasBorder?: boolean }>(
   'formcube',
   ({ children, hasBorder, ...props }) => {
-
-    if(hasBorder){
+    if (hasBorder) {
       return <CubeCard {...props}>{children}</CubeCard>
     }
 

@@ -1,5 +1,5 @@
-import { uid } from "@formily/shared";
+import { uid } from '@formily/shared'
 
 export default () => {
-  return uid();
-};
+  return uid()
+}

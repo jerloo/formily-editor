@@ -5,11 +5,7 @@ import * as listUtil from '../../libs/listUtil'
 import SquareBtn from '../../../../components/SquareBtn'
 import './style.scss'
 
-const Actions = ({
-  isMeet,
-  title,
-  value,
-}) => {
+const Actions = ({ isMeet, title, value }) => {
   const { changed } = useContext(LinkageContext)
   const { rule } = useContext(RuleContext)
 
@@ -18,7 +14,7 @@ const Actions = ({
       isMeet,
       target: '',
       prop: 'value',
-      value: '',
+      value: ''
     })
 
     if (isMeet) {
@@ -26,7 +22,7 @@ const Actions = ({
         isMeet: false,
         target: '',
         prop: 'value',
-        value: '',
+        value: ''
       })
     }
 
@@ -41,14 +37,14 @@ const Actions = ({
         isMeet: false,
         target: '',
         prop: 'value',
-        value: '',
+        value: ''
       })
     }
 
     changed()
   }
 
-  const onActionDelete = (action) => {
+  const onActionDelete = action => {
     listUtil.deleteItem(value, action)
 
     changed()
@@ -59,25 +55,21 @@ const Actions = ({
       <div className="title">
         <span className="title-text">{title}</span>
         <span className="title-btn">
-          {
-            value.length === 0 ?
-            <SquareBtn onClick={onAddFirstClick}>+</SquareBtn> :
-            null
-          }
+          {value.length === 0 ? (
+            <SquareBtn onClick={onAddFirstClick}>+</SquareBtn>
+          ) : null}
         </span>
       </div>
       <div>
-        {
-          value.map((action, index) => (
-            <Action
-              key={index}
-              index={index}
-              value={action}
-              onAdd={onActionAdd}
-              onDelete={onActionDelete}
-            />
-          ))
-        }
+        {value.map((action, index) => (
+          <Action
+            key={index}
+            index={index}
+            value={action}
+            onAdd={onActionAdd}
+            onDelete={onActionDelete}
+          />
+        ))}
       </div>
     </div>
   )

@@ -1,19 +1,12 @@
 import React, { useState, useContext } from 'react'
 import { LinkageContext, RuleContext } from '../../context'
-import {
-  Button,
-  Icon,
-} from '@alifd/next'
+import { Button, Icon } from '@alifd/next'
 import Conditions from '../Conditions/Conditions'
 import Actions from '../Actions/Actions'
 import classnames from 'classnames'
 import './style.scss'
 
-const Rule = ({
-  title = '',
-  value,
-  onDelete,
-}) => {
+const Rule = ({ title = '', value, onDelete }) => {
   const ctx = useContext(LinkageContext)
   const [fold, setFold] = useState(false)
 
@@ -36,10 +29,14 @@ const Rule = ({
           <span className="title">{title}</span>
           <div className="operations">
             <Button className="btn-delete" text onClick={onDeleteClick}>
-              <Icon type="ashbin" />删除规则
+              <Icon type="ashbin" />
+              删除规则
             </Button>
             <Button text onClick={onFoldClick}>
-              <Icon className={classnames('fold-icon', { fold })} type="arrow-up" />
+              <Icon
+                className={classnames('fold-icon', { fold })}
+                type="arrow-up"
+              />
               <span>{fold ? '展开' : '收起'}</span>
             </Button>
           </div>

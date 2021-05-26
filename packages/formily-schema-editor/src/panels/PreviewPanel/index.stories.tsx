@@ -3,6 +3,10 @@ import { PreviewPanel } from './index'
 
 // import { schema } from './mock'
 
-export default { title: 'PreviewPanel' };
+export default { title: 'PreviewPanel' }
 
-export const Demo = () => <div><PreviewPanel  /></div>;
+export const Demo = () => (
+  <div>
+    <PreviewPanel />
+  </div>
+)
