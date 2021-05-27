@@ -12,12 +12,9 @@
     "sourceMap": false,
     "baseUrl": ".",
     "declaration": true,
-    "lib": [
-      "es6",
-      "dom",
-      "es2017"
-    ],
+    "lib": ["es6", "dom", "es2017"],
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
-  },
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
+  }
 }
